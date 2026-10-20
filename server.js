@@ -6,7 +6,9 @@ const crypto=require('crypto');
 for(const key of ['DATABASE_URL','SESSION_SECRET','ADMIN_EMAIL','ADMIN_PASSWORD'])if(!process.env[key]){console.error('Missing '+key);process.exit(1)}
 if(process.env.SESSION_SECRET.length<32){console.error('SESSION_SECRET must be at least 32 characters');process.exit(1)}
 const pool=new Pool({connectionString:process.env.DATABASE_URL,ssl:process.env.DATABASE_SSL==='true'?{rejectUnauthorized:true}:undefined});
-const app=express();app.disable('x-powered-by');if(process.env.NODE_ENV==='production')app.set('trust proxy',1);
+const app=express();app.disable('x-powered-by');if(process.env.NODE_ENV==='production')app.set('trust proxy',1);app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/index.html");
+});
 app.use(helmet({contentSecurityPolicy:{directives:{defaultSrc:["'self'"],scriptSrc:["'self'"],styleSrc:["'self'"],imgSrc:["'self'","https:","data:"],connectSrc:["'self'"],objectSrc:["'none'"],upgradeInsecureRequests:process.env.NODE_ENV==='production'?[]:null}}}));
 app.use(express.json({limit:'30kb'}));app.use(session({store:new PgSession({pool,createTableIfMissing:true}),name:'kw.sid',secret:process.env.SESSION_SECRET,resave:false,saveUninitialized:false,cookie:{httpOnly:true,sameSite:'lax',secure:process.env.NODE_ENV==='production',maxAge:1000*60*60*12}}));
 app.use('/api', (req,res,next)=>{if(['POST','PUT','PATCH','DELETE'].includes(req.method)){const origin=req.get('origin');if(origin){try{if(new URL(origin).host!==req.get('host'))return res.status(403).json({error:'Origin not allowed'})}catch{return res.status(403).json({error:'Invalid origin'})}}}next()});
