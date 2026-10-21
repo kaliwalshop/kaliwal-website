@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KALIWAL Online Shopping</title>
+<style>
+* {box-sizing:border-box}
+body {margin:0;font-family:Arial,sans-serif;background:#f4f6fa;color:#222}
+header {background:#102a43;color:white;padding:20px;text-align:center}
+nav {background:#173f5f;padding:14px;text-align:center}
+nav a {color:white;margin:10px;text-decoration:none}
+.hero {background:#e8f1fa;padding:45px 15px;text-align:center}
+.hero h1 {color:#102a43}
+.btn {background:#ff9800;color:#111;border:0;border-radius:6px;padding:12px 20px;cursor:pointer}
+.products {padding:25px 15px;max-width:1100px;margin:auto}
+.grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.card {background:white;padding:20px;border-radius:10px;box-shadow:0 2px 8px #ddd;text-align:center}
+.card img {width:100%;height:160px;object-fit:contain}
+footer {background:#102a43;color:white;text-align:center;padding:20px;margin-top:30px}
+</style>
+</head>
+<body>
+
+<header>
+<h1>KALIWAL.COM</h1>
+<p>Your Trusted Online Shopping Store</p>
+</header>
+
+<nav>
+<a href="/">Home</a>
+<a href="#products">Products</a>
+<a href="#contact">Contact</a>
+</nav>
+
+<section class="hero">
+<h1>Welcome to KALIWAL Online Shopping</h1>
+<p>Shop your favorite products at affordable prices.</p>
+<a href="#products"><button class="btn">Shop Now</button></a>
+</section>
+
+<section class="products" id="products">
+<h2>Our Products</h2>
+<div class="grid" id="productGrid">
+<p>Loading products...</p>
+</div>
+</section>
+
+<footer id="contact">
+<p>KALIWAL Online Shopping</p>
+<p>© 2026 KALIWAL.COM</p>
+</footer>
+
+<script>
+async function loadProducts(){
+ const grid=document.getElementById('productGrid');
+ try {
+  const response=await fetch('/api/products');
+  if(!response.ok) throw new Error('Unable to load products');
+  const products=await response.json();
+  if(!Array.isArray(products)||products.length===0){
+   grid.textContent='No products available yet.';
+   return;
+  }
+  grid.replaceChildren();
+  products.forEach(p=>{
+   const card=document.createElement('div');
+   card.className='card';
+   const title=document.createElement('h3');
+   title.textContent=p.name||'Product';
+   const price=document.createElement('p');
+   price.textContent='Price: '+(p.price??'Contact us');
+   card.append(title,price);
+   grid.append(card);
+  });
+ }catch(error){
+  grid.textContent='Products are temporarily unavailable.';
+ }
+}
+loadProducts();
+</script>
+
+</body>
+</html>
