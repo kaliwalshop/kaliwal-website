@@ -82,3 +82,12 @@ body.urdu [data-en]{direction:rtl}
 
 /* Owner photo uploader */
 .photo-upload-label{display:block;padding:16px;border:2px dashed #fac5ad;border-radius:12px;background:#fff8f4;font-weight:700;color:#8e411b}.photo-upload-label input[type=file]{margin-top:10px;background:#fff;border:1px solid #e9cdbd;border-radius:9px;padding:12px;width:100%;max-width:100%;font:inherit}.product-photo-preview{display:block;max-width:240px;max-height:230px;width:auto;height:auto;object-fit:contain;margin:12px 0;border:1px solid #ead7ca;border-radius:12px;background:#fff}.product-photo-preview[hidden]{display:none}
+
+/* Free WhatsApp click-to-chat confirmation — customer manually presses Send */
+.wa-order-panel{margin:18px 0;padding:20px;background:#eefaf0;border:1px solid #a6dfb2;border-radius:14px;color:#18492a;box-shadow:0 3px 14px rgba(25,109,60,.08)}
+.wa-order-panel h3{margin:0 0 9px;font-size:19px}.wa-order-panel p{line-height:1.55;font-size:14px}
+.wa-order-panel[hidden]{display:none}
+.wa-order-link{display:inline-flex;align-items:center;justify-content:center;text-align:center;gap:8px;background:#128c50;color:#fff!important;text-decoration:none;border-radius:10px;padding:15px 18px;font-weight:800;max-width:100%;line-height:1.4}
+.wa-order-link:hover,.wa-order-link:focus-visible{background:#0c7340}
+.wa-small{font-size:12px!important;color:#4a6b57}
+@media(max-width:550px){.wa-order-link{width:100%}.wa-order-panel{padding:16px}}

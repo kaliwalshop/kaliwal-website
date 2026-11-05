@@ -3,7 +3,57 @@ $('productCount').textContent=filtered.length+' products';
 document.querySelectorAll('#categoryChips [data-category]').forEach(b=>b.classList.toggle('selected',b.dataset.category===activeCategory));
 $('products').innerHTML=filtered.map(p=>`<article class="card"><div class="art">${p.image_url?`<img loading="lazy" src="${esc(p.image_url)}" alt="${esc(p.name)}">`:({'Honey':'🍯','Dry Fruits':'🥜','Mustard Oil':'🌻','Cow Ghee':'🧈','Olive Oil':'🫒'}[p.category]||'🛍️')}</div><div class="card-body"><span class="product-type">${esc(p.category)}</span><h3>${esc(lang==='ur'?p.urdu||p.name:p.name)}</h3><div class="small">${esc(p.size)}</div><div class="price">${rs(p.price)}</div><div class="stock-note ${p.stock<1?'out':''}">${p.stock>0?esc(p.stock)+' in stock':'Out of stock'}</div><button class="primary" data-add="${p.id}" ${p.stock<1?'disabled':''}>${lang==='ur'?'ٹوکری میں شامل کریں':'🛒 Add to Cart'}</button></div></article>`).join('')||'<p class="panel">No products match your selection.</p>' ;let lines=products.filter(p=>cart[p.id]);$('cartLines').innerHTML=lines.map(p=>`<div class="panel row"><div><b>${esc(p.name)}</b><p>${rs(p.price)} × ${cart[p.id]}</p></div><div><button data-minus="${p.id}">−</button> ${cart[p.id]} <button data-add="${p.id}" ${cart[p.id]>=p.stock?'disabled':''}>+</button></div></div>`).join('')||'<p>Your cart is empty / ٹوکری خالی ہے</p>';$('total').textContent='Total: '+rs(lines.reduce((s,p)=>s+p.price*cart[p.id],0));$('checkout').hidden=!lines.length;let options=[['JazzCash','jazz'],['Easypaisa','easy'],['Bank Transfer','iban']].filter(x=>settings[x[1]]);let selected=$('pay').value;$('pay').innerHTML=options.map(([name])=>`<option ${selected===name?'selected':''}>${name}</option>`).join('');let method=$('pay').value;$('payDetails').textContent=method==='JazzCash'?`JazzCash: ${settings.jazz||''} · ${settings.jazzName||''}`:method==='Easypaisa'?`Easypaisa: ${settings.easy||''} · ${settings.easyName||''}`:method==='Bank Transfer'?`Bank: ${settings.bank||''} · ${settings.bankName||''} · ${settings.iban||''}`:'No payment account configured yet. Checkout unavailable.';$('checkout').querySelector('button[type=submit]').disabled=!method||offline();$('loginBox').hidden=admin;$('dashboard').hidden=!admin;if(admin)renderAdmin();persistCart();connection()}function renderAdmin(){$('adminProducts').innerHTML=adminProducts.map(p=>`<div class="line row"><div>${esc(p.name)} · ${rs(p.price)} · Stock ${p.stock}${p.active?'':' · Hidden'}</div><div><button data-edit="${p.id}">Edit</button><button data-hide="${p.id}">Hide</button></div></div>`).join('')}
 document.addEventListener('click',e=>{let b=e.target.closest('button');if(!b)return;let id=Number(b.dataset.add||b.dataset.minus);if(b.dataset.add){let p=products.find(x=>Number(x.id)===id);if(p)cart[id]=Math.min(p.stock,(cart[id]||0)+1),render()}if(b.dataset.minus){cart[id]=Math.max(0,(cart[id]||0)-1);if(!cart[id])delete cart[id];render()}if(b.dataset.edit){let p=adminProducts.find(x=>Number(x.id)===Number(b.dataset.edit));if(p){let f=$('productForm');clearProductPhoto();for(let k of ['id','name','urdu','category','price','stock','size','image_url','description'])f.elements[k].value=p[k]??'';if(p.image_url){$('productPhotoPreview').src=p.image_url+'?v='+Date.now();$('productPhotoPreview').hidden=false}f.scrollIntoView({behavior:'smooth'})}}if(b.dataset.hide&&confirm('Hide product from customers?'))api('/admin/products/'+b.dataset.hide,{method:'DELETE'}).then(refreshAdmin).catch(e=>msg(e.message))});$('search').addEventListener('input',()=>{tab('shop')});document.querySelectorAll('[data-category]').forEach(b=>b.addEventListener('click',()=>{activeCategory=b.dataset.category;$('search').value='';tab('shop');$('shop').scrollIntoView({behavior:'smooth',block:'start'})}));$('pay').addEventListener('change',render);
-$('checkout').addEventListener('submit',async e=>{e.preventDefault();if(offline()){msg('You are offline. Your cart is saved on this device; reconnect before placing an order.');return;}let f=e.target,d=Object.fromEntries(new FormData(f));d.items=Object.entries(cart).map(([id,qty])=>({id:Number(id),qty}));try{let o=await api('/orders',{method:'POST',body:JSON.stringify(d)});cart={};persistCart();$('token').value=o.tracking_token;await load();tab('track');$('trackResult').textContent=`Order #${o.id} · ${rs(o.total)} · ${o.status}. Save this tracking code: ${o.tracking_token}. Payment NOT verified.`;msg('Order placed! Save your private tracking code. / آرڈر درج ہوگیا۔ کوڈ محفوظ کریں۔')}catch(err){msg(err.message)}});
+function pakistaniWhatsAppNumber(value){
+  const phone=String(value||'').replace(/[\s().-]/g,'');
+  const digits=phone.replace(/^\+/,'');
+  if(/^03\d{9}$/.test(digits))return '92'+digits.slice(1);
+  if(/^923\d{9}$/.test(digits))return digits;
+  return null;
+}
+function prepareWhatsAppOrder(order,formData,purchased){
+  const box=$('whatsappOrder'),button=$('whatsappOrderLink');
+  const recipient=pakistaniWhatsAppNumber(settings.support);
+  if(!recipient){box.hidden=true;button.removeAttribute('href');return}
+  const itemLines=purchased.map(p=>`• ${p.name} × ${p.qty} — ${rs(p.unit_price*p.qty)}`);
+  const message=[
+    '🛍️ KALIWAL.COM — NEW ORDER',
+    `Order #${order.id}`,
+    '',
+    'Products:',...itemLines,
+    `Total: ${rs(order.total)}`,
+    '',
+    `Customer: ${formData.name}`,
+    `Mobile: ${formData.phone}`,
+    `Delivery: ${formData.address}, ${formData.city}, ${formData.province}`,
+    `Payment method: ${formData.payment}`,
+    'Payment status: Not verified',
+    '',
+    'Please confirm delivery charges and my order.'
+  ].join('\n');
+  button.href='https://wa.me/'+recipient+'?text='+encodeURIComponent(message);
+  box.hidden=false;
+}
+$('checkout').addEventListener('submit',async e=>{
+  e.preventDefault();
+  if(offline()){msg('You are offline. Your cart is saved on this device; reconnect before placing an order.');return}
+  const f=e.target,d=Object.fromEntries(new FormData(f));
+  d.items=Object.entries(cart).map(([id,qty])=>({id:Number(id),qty}));
+  const purchased=d.items.map(({id,qty})=>{
+    const p=products.find(x=>Number(x.id)===id);
+    return p?{name:p.name,qty,unit_price:p.price}:{name:'Product #'+id,qty,unit_price:0};
+  });
+  const submit=f.querySelector('button[type=submit]');submit.disabled=true;
+  try{
+    const o=await api('/orders',{method:'POST',body:JSON.stringify(d)});
+    // Save the order BEFORE opening WhatsApp; never create duplicate orders by tapping the button.
+    prepareWhatsAppOrder(o,d,purchased);
+    cart={};persistCart();$('token').value=o.tracking_token;
+    await load();tab('track');
+    $('trackResult').textContent=`Order #${o.id} · ${rs(o.total)} · ${o.status}. Save this private tracking code: ${o.tracking_token}. Payment NOT verified.`;
+    msg($('whatsappOrder').hidden?'Order saved! Save your tracking code. Ask the store to configure an order WhatsApp number.':'Order saved! Tap the WhatsApp button below and press Send to notify the shop.');
+    if(!$('whatsappOrder').hidden)$('whatsappOrder').scrollIntoView({behavior:'smooth',block:'center'});
+  }catch(err){msg(err.message)}finally{submit.disabled=false}
+});
 $('trackBtn').addEventListener('click',async()=>{try{let o=await api('/orders/track/'+encodeURIComponent($('token').value.trim()));$('trackResult').textContent=`Order #${o.id} · ${o.status} · ${rs(o.total)} · ${new Date(o.created_at).toLocaleString()}`}catch(e){$('trackResult').textContent=e.message}});
 $('login').addEventListener('submit',async e=>{e.preventDefault();try{await api('/login',{method:'POST',body:JSON.stringify(Object.fromEntries(new FormData(e.target)))});admin=true;await refreshAdmin();render();msg('Signed in successfully')}catch(e){msg(e.message)}});$('logout').addEventListener('click',async()=>{await api('/logout',{method:'POST'});admin=false;render();msg('Signed out')});let localPhotoPreviewUrl=null;
 function clearProductPhoto(){const input=$('productPhoto'),preview=$('productPhotoPreview');input.value='';if(localPhotoPreviewUrl){URL.revokeObjectURL(localPhotoPreviewUrl);localPhotoPreviewUrl=null}preview.hidden=true;preview.removeAttribute('src')}

@@ -8,8 +8,8 @@
   <title>KALIWAL | Online Shopping in Pakistan</title>
   <link rel="icon" href="logo.jpg">
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="style.css?v=4-photo">
-  <script src="app.js?v=4-photo" defer></script>
+  <link rel="stylesheet" href="style.css?v=5-whatsapp">
+  <script src="app.js?v=5-whatsapp" defer></script>
 </head>
 <body data-view="shop">
   <div class="topbar"><div class="container topbar-inner"><span>🇵🇰 Your marketplace for authentic natural foods</span><span>Welcome to <strong>KALIWAL</strong> · English / اردو</span></div></div>
@@ -111,6 +111,12 @@
     <section id="track" class="inner-section" hidden>
       <div class="section-heading"><div><span class="heading-kicker">KEEP UP TO DATE</span><h2>Track Your Order 📦</h2></div></div>
       <div class="panel"><label>Private tracking code / آرڈر کوڈ<input id="token" placeholder="Enter your private tracking code"></label><button id="trackBtn" type="button" class="primary action-btn">Track Order →</button><div id="trackResult"></div></div>
+      <div id="whatsappOrder" class="wa-order-panel" hidden>
+        <h3>✅ Your order has been saved!</h3>
+        <p>To notify our shop on WhatsApp, tap the button below, then press <strong>Send</strong> inside WhatsApp. This is an optional step: your order is already saved.</p>
+        <a id="whatsappOrderLink" class="wa-order-link" href="#" target="_blank" rel="noopener noreferrer">🟢 Send Order on WhatsApp / واٹس ایپ پر آرڈر بھیجیں ↗</a>
+        <p class="wa-small">WhatsApp will open with your order details. Review the message before sending. Payment is verified separately.</p>
+      </div>
     </section>
 
     <section id="admin" class="inner-section" hidden>
@@ -124,7 +130,7 @@
 <p id="photoHelp" class="small">Select a photo from Gallery or Camera. It will be resized and saved with your product. No photo URL needed.</p>
 <img id="productPhotoPreview" class="product-photo-preview" alt="Selected product photo preview" hidden>
 <label>Or use a Photo HTTPS URL (optional)<input name="image_url" placeholder="https://..."></label><label>Description<textarea name="description"></textarea></label><button class="primary" type="submit">Save Product</button> <button id="resetProduct" type="button">New Product</button></form><div id="adminProducts"></div></div>
-        <div class="panel"><h3>Payment Accounts / ادائیگی اکاؤنٹس</h3><form id="settingsForm"><div class="cols"><label>JazzCash number<input name="jazz"></label><label>JazzCash account title<input name="jazzName"></label><label>Easypaisa number<input name="easy"></label><label>Easypaisa account title<input name="easyName"></label><label>Bank name<input name="bank"></label><label>Bank account title<input name="bankName"></label><label>Bank account / IBAN<input name="iban"></label><label>Support phone<input name="support"></label></div><button class="primary" type="submit">Save Payment Accounts</button></form></div>
+        <div class="panel"><h3>Payment Accounts / ادائیگی اکاؤنٹس</h3><form id="settingsForm"><div class="cols"><label>JazzCash number<input name="jazz"></label><label>JazzCash account title<input name="jazzName"></label><label>Easypaisa number<input name="easy"></label><label>Easypaisa account title<input name="easyName"></label><label>Bank name<input name="bank"></label><label>Bank account title<input name="bankName"></label><label>Bank account / IBAN<input name="iban"></label><label>Order WhatsApp number (+92) / آرڈر واٹس ایپ نمبر<input name="support" type="tel" inputmode="tel" placeholder="03XXXXXXXXX or +923XXXXXXXXX"></label></div><p class="small">Use your business WhatsApp number. It will be shared with customers when they tap Send Order on WhatsApp. The customer must press Send; messages are not sent automatically.</p><button class="primary" type="submit">Save Payment Accounts</button></form></div>
         <div class="panel"><h3>Customer Orders / آرڈرز</h3><div id="adminOrders"></div></div>
       </div>
     </section>
