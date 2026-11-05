@@ -1,283 +1,129 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#145736">
-
-<title>KALIWAL.COM | Pure Natural Trusted</title>
-
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ed5a2b">
+  <meta name="description" content="Shop natural honey, dry fruits, mustard oil, cow ghee and olive oil at KALIWAL Online Shopping Pakistan.">
+  <title>KALIWAL | Online Shopping in Pakistan</title>
+  <link rel="icon" href="logo.jpg">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="style.css?v=3">
+  <script src="app.js?v=3" defer></script>
 </head>
-
-<body>
-
-<header>
-<img src="logo.jpg" alt="Kaliwal.com official logo">
-
-<div>
-<b>Kaliwal.com</b>
-<small>Pure. Natural. Trusted. · خالص، قدرتی، قابلِ اعتماد</small>
-</div>
-
-<button id="lang" type="button">اردو / EN</button>
-</header>
-
-<div id="connection" role="status"
-style="padding:12px;background:#fff1c9;color:#503a0a;text-align:center;font-weight:600">
-Connecting to store...
-</div>
-
-<main>
-
-<section class="hero">
-<h1 data-en="Nature's finest, delivered in Pakistan"
-data-ur="پاکستان بھر میں خالص قدرتی مصنوعات">
-Nature's finest, delivered in Pakistan
-</h1>
-
-<p>🍯 Honey · 🥜 Dry Fruits · 🌻 Mustard Oil · 🧈 Cow Ghee · 🫒 Olive Oil</p>
-</section>
-
-<nav>
-<button type="button" data-tab="shop">🛍️ Shop / خریداری</button>
-<button type="button" data-tab="cart">🛒 Cart / ٹوکری <span id="badge"></span></button>
-<button type="button" data-tab="track">📦 Track / آرڈر</button>
-<button type="button" data-tab="admin">⚙️ Admin / انتظامیہ</button>
-</nav>
-
-<p id="message" role="status" aria-live="polite"></p>
-
-<section id="shop">
-<div class="row">
-<h2>Products / مصنوعات</h2>
-<input id="search" placeholder="Search / تلاش کریں" aria-label="Search products">
-</div>
-<div id="products" class="grid"></div>
-</section>
-
-<section id="cart" hidden>
-<h2>Cart / ٹوکری</h2>
-<div id="cartLines"></div>
-<h3 id="total"></h3>
-
-<form id="checkout" class="panel">
-<h3>Delivery & payment / پتہ اور ادائیگی</h3>
-
-<div class="cols">
-
-<label>Full name / نام
-<input name="name" required maxlength="90">
-</label>
-
-<label>Pakistani mobile / موبائل
-<input name="phone" required placeholder="03XXXXXXXXX" pattern="0?3[0-9]{9}">
-</label>
-
-<label>City / شہر
-<input name="city" required maxlength="70">
-</label>
-
-<label>Province / صوبہ
-<select name="province">
-<option>Punjab</option>
-<option>Khyber Pakhtunkhwa</option>
-<option>Sindh</option>
-<option>Balochistan</option>
-<option>Islamabad</option>
-<option>Gilgit-Baltistan</option>
-<option>Azad Kashmir</option>
-</select>
-</label>
-
-</div>
-
-<label>Full address / مکمل پتہ
-<textarea name="address" required maxlength="400"></textarea>
-</label>
-
-<label>Payment / ادائیگی
-<select id="pay" name="payment"></select>
-</label>
-
-<p id="payDetails" class="info"></p>
-
-<label>Transfer reference (optional) / ٹرانزیکشن نمبر
-<input name="reference" maxlength="100">
-</label>
-
-<p class="small">
-Payment is manual. Sending a reference does not confirm payment.
-Our team verifies transfers separately.
-Delivery charges will be confirmed.
-</p>
-
-<button class="primary" type="submit">
-Place order / آرڈر کریں
-</button>
-
-</form>
-</section>
-
-<section id="track" hidden>
-<h2>Order tracking / آرڈر کی معلومات</h2>
-
-<div class="panel">
-<label>Private tracking code / آرڈر کوڈ
-<input id="token" placeholder="Paste your tracking code">
-</label>
-
-<button id="trackBtn" class="primary" type="button">
-Track order / چیک کریں
-</button>
-
-<div id="trackResult"></div>
-</div>
-</section>
-
-<section id="admin" hidden>
-<h2>Store dashboard / ایڈمن ڈیش بورڈ</h2>
-
-<div id="loginBox" class="panel">
-<h3>Secure admin login</h3>
-
-<form id="login">
-<label>Email
-<input name="email" type="email" required>
-</label>
-
-<label>Password
-<input name="password" type="password" required>
-</label>
-
-<button class="primary" type="submit">Sign in</button>
-</form>
-</div>
-
-<div id="dashboard" hidden>
-
-<button id="logout" type="button">Logout</button>
-
-<div class="panel">
-<h3>Add / edit product — پراڈکٹ اور قیمت</h3>
-
-<form id="productForm">
-<input name="id" type="hidden">
-
-<div class="cols">
-
-<label>Product name
-<input name="name" required>
-</label>
-
-<label>اردو نام
-<input name="urdu" dir="rtl">
-</label>
-
-<label>Category
-<select name="category">
-<option>Honey</option>
-<option>Dry Fruits</option>
-<option>Mustard Oil</option>
-<option>Cow Ghee</option>
-<option>Olive Oil</option>
-<option>Other</option>
-</select>
-</label>
-
-<label>Price (PKR)
-<input name="price" type="number" min="0" max="100000000" required>
-</label>
-
-<label>Stock (units)
-<input name="stock" type="number" min="0" max="1000000" required>
-</label>
-
-<label>Pack size
-<input name="size" placeholder="500g / 1kg">
-</label>
-
-</div>
-
-<label>Photo HTTPS URL
-<input name="image_url" placeholder="https://...">
-</label>
-
-<label>Description
-<textarea name="description"></textarea>
-</label>
-
-<button class="primary" type="submit">Save product</button>
-<button id="resetProduct" type="button">New product</button>
-</form>
-
-<div id="adminProducts"></div>
-</div>
-
-<div class="panel">
-<h3>Payment accounts / ادائیگی اکاؤنٹس</h3>
-
-<form id="settingsForm">
-<div class="cols">
-
-<label>JazzCash number
-<input name="jazz">
-</label>
-
-<label>JazzCash account title
-<input name="jazzName">
-</label>
-
-<label>Easypaisa number
-<input name="easy">
-</label>
-
-<label>Easypaisa account title
-<input name="easyName">
-</label>
-
-<label>Bank name
-<input name="bank">
-</label>
-
-<label>Bank account title
-<input name="bankName">
-</label>
-
-<label>Bank account / IBAN
-<input name="iban">
-</label>
-
-<label>Support phone
-<input name="support">
-</label>
-
-</div>
-
-<button class="primary" type="submit">
-Save payment accounts
-</button>
-</form>
-</div>
-
-<div class="panel">
-<h3>Customer orders / آرڈرز</h3>
-<div id="adminOrders"></div>
-</div>
-
-</div>
-</section>
-
-</main>
-
-<footer>
-© Kaliwal.com · Created by Shoaib Ahmad · تخلیق: شعیب احمد
-<br>
-<small>Pakistan delivery · Manual payment verification</small>
-</footer>
-
-<script src="app.js" defer></script>
-
+<body data-view="shop">
+  <div class="topbar"><div class="container topbar-inner"><span>🇵🇰 Your marketplace for authentic natural foods</span><span>Welcome to <strong>KALIWAL</strong> · English / اردو</span></div></div>
+  <header class="site-header">
+    <div class="container head-inner">
+      <div class="brand-wrap" aria-label="KALIWAL Online Shopping">
+        <img src="logo.jpg" alt="KALIWAL logo" class="brand-logo">
+        <div class="brand-copy"><b>KALIWAL<span>.com</span></b><small>Pure · Natural · Trusted</small></div>
+      </div>
+      <label class="header-search" aria-label="Search products">
+        <input id="search" type="search" placeholder="Search honey, dry fruits, oils and more..." autocomplete="off">
+        <span aria-hidden="true">⌕</span>
+      </label>
+      <button type="button" class="cart-head" data-tab="cart" aria-label="Open shopping cart">🛒 <span class="cart-label">Cart</span><strong id="badge">0</strong></button>
+      <button id="lang" type="button" class="language-button">اردو / EN</button>
+    </div>
+  </header>
+  <div class="nav-shell">
+    <nav class="container store-nav" aria-label="Store navigation">
+      <button type="button" class="active" data-tab="shop">🏠 Home & Shop</button>
+      <button type="button" data-category="Honey">🍯 Honey</button>
+      <button type="button" data-category="Dry Fruits">🥜 Dry Fruits</button>
+      <button type="button" data-category="Mustard Oil">🌻 Mustard Oil</button>
+      <button type="button" data-category="Cow Ghee">🧈 Cow Ghee</button>
+      <button type="button" data-category="Olive Oil">🫒 Olive Oil</button>
+      <button type="button" data-tab="track">📦 Track Order</button>
+    </nav>
+  </div>
+  <div id="connection" role="status" class="connection-status">Connecting to KALIWAL store...</div>
+
+  <main class="container">
+    <p id="message" role="status" aria-live="polite"></p>
+    <div class="home-only">
+      <div class="welcome-line"><span>🏷️ Quality natural products, fair prices</span><span>Fresh finds for your family</span></div>
+      <div class="hero-grid">
+        <aside class="category-sidebar" aria-label="Categories">
+          <h2>Shop by category</h2>
+          <button type="button" data-category="Honey"><span>🍯</span> Pure Honey <b>›</b></button>
+          <button type="button" data-category="Dry Fruits"><span>🥜</span> Dry Fruits <b>›</b></button>
+          <button type="button" data-category="Mustard Oil"><span>🌻</span> Mustard Oil <b>›</b></button>
+          <button type="button" data-category="Cow Ghee"><span>🧈</span> Cow Ghee <b>›</b></button>
+          <button type="button" data-category="Olive Oil"><span>🫒</span> Olive Oil <b>›</b></button>
+        </aside>
+        <section class="hero" aria-label="Featured products">
+          <div class="hero-copy"><span class="eyebrow">WELCOME TO KALIWAL</span><h1>Pure goodness,<br><em>delivered to your door.</em></h1><p>Discover carefully selected honey, dry fruits, oils and ghee — all in one convenient place.</p><a href="#shop" class="hero-cta">Explore Products <span>→</span></a></div>
+          <div class="hero-visual" aria-hidden="true"><span class="circle circle-one"></span><span class="circle circle-two"></span><span class="hero-honey">🍯</span><span class="hero-nuts">🥜</span><span class="hero-olive">🫒</span></div>
+        </section>
+        <aside class="promo-aside">
+          <div class="promo-box orange"><span>SHOP NATURAL</span><strong>Everyday essentials<br>for your home</strong><i>🌿</i></div>
+          <div class="promo-box cream"><span>FAST & EASY</span><strong>Order online,<br>track anytime</strong><i>📦</i></div>
+        </aside>
+      </div>
+      <div class="trust-strip"><div><span>🛍️</span><b>Easy shopping</b><small>Order on any device</small></div><div><span>📦</span><b>Order tracking</b><small>Use your private order code</small></div><div><span>🔒</span><b>Secure checkout</b><small>Payment checked manually</small></div><div><span>🇵🇰</span><b>Pakistan delivery</b><small>Charges confirmed before dispatch</small></div></div>
+      <section class="category-tiles" aria-label="Explore categories">
+        <div class="section-heading"><div><span class="heading-kicker">EXPLORE</span><h2>Shop Popular Categories</h2></div><span>Handpicked for you</span></div>
+        <div class="tiles">
+          <button type="button" data-category="Honey"><span class="tile-icon honey">🍯</span><b>Pure Honey</b></button>
+          <button type="button" data-category="Dry Fruits"><span class="tile-icon nuts">🥜</span><b>Dry Fruits</b></button>
+          <button type="button" data-category="Mustard Oil"><span class="tile-icon mustard">🌻</span><b>Mustard Oil</b></button>
+          <button type="button" data-category="Cow Ghee"><span class="tile-icon ghee">🧈</span><b>Cow Ghee</b></button>
+          <button type="button" data-category="Olive Oil"><span class="tile-icon olive">🫒</span><b>Olive Oil</b></button>
+        </div>
+      </section>
+    </div>
+
+    <section id="shop" class="store-section">
+      <div class="section-heading products-heading"><div><span class="heading-kicker">KALIWAL COLLECTION</span><h2>Recommended For You <small>/ مصنوعات</small></h2></div><span id="productCount" aria-live="polite"></span></div>
+      <div id="categoryChips" class="category-chips" aria-label="Filter products">
+        <button type="button" data-category="All" class="selected">All Products</button>
+        <button type="button" data-category="Honey">🍯 Honey</button>
+        <button type="button" data-category="Dry Fruits">🥜 Dry Fruits</button>
+        <button type="button" data-category="Mustard Oil">🌻 Mustard Oil</button>
+        <button type="button" data-category="Cow Ghee">🧈 Cow Ghee</button>
+        <button type="button" data-category="Olive Oil">🫒 Olive Oil</button>
+      </div>
+      <div id="products" class="grid"></div>
+    </section>
+
+    <section id="cart" class="inner-section" hidden>
+      <div class="section-heading"><div><span class="heading-kicker">CHECKOUT</span><h2>Your Shopping Cart 🛒</h2></div></div>
+      <div id="cartLines"></div><h3 id="total" class="cart-total"></h3>
+      <form id="checkout" class="panel" autocomplete="on">
+        <h3>Delivery &amp; Payment / پتہ اور ادائیگی</h3>
+        <div class="cols">
+          <label>Full name / نام<input name="name" required maxlength="90" autocomplete="name"></label>
+          <label>Pakistani mobile / موبائل<input name="phone" type="tel" required placeholder="03XXXXXXXXX" pattern="0?3[0-9]{9}"></label>
+          <label>City / شہر<input name="city" required maxlength="70" autocomplete="address-level2"></label>
+          <label>Province / صوبہ<select name="province"><option>Punjab</option><option>Khyber Pakhtunkhwa</option><option>Sindh</option><option>Balochistan</option><option>Islamabad</option><option>Gilgit-Baltistan</option><option>Azad Kashmir</option></select></label>
+        </div>
+        <label>Full address / مکمل پتہ<textarea name="address" required maxlength="400" autocomplete="street-address"></textarea></label>
+        <label>Payment method / ادائیگی<select id="pay" name="payment"></select></label>
+        <p id="payDetails" class="info"></p>
+        <label>Transfer reference (optional) / ٹرانزیکشن نمبر<input name="reference" maxlength="100"></label>
+        <p class="small">Payment is manual. Submitting a transfer reference is not proof of payment. Delivery charges will be confirmed before dispatch.</p>
+        <button type="submit" class="primary action-btn">Place Order →</button>
+      </form>
+    </section>
+
+    <section id="track" class="inner-section" hidden>
+      <div class="section-heading"><div><span class="heading-kicker">KEEP UP TO DATE</span><h2>Track Your Order 📦</h2></div></div>
+      <div class="panel"><label>Private tracking code / آرڈر کوڈ<input id="token" placeholder="Enter your private tracking code"></label><button id="trackBtn" type="button" class="primary action-btn">Track Order →</button><div id="trackResult"></div></div>
+    </section>
+
+    <section id="admin" class="inner-section" hidden>
+      <div class="section-heading"><div><span class="heading-kicker">OWNER ACCESS</span><h2>Store Management / ایڈمن ڈیش بورڈ</h2></div></div>
+      <div id="loginBox" class="panel"><h3>Secure Administrator Login</h3><form id="login"><label>Email<input name="email" type="email" required autocomplete="username"></label><label>Password<input name="password" type="password" required autocomplete="current-password"></label><button class="primary action-btn">Sign In</button></form></div>
+      <div id="dashboard" hidden>
+        <button id="logout" type="button">Log Out</button>
+        <div class="panel"><h3>Manage Products / پراڈکٹ اور قیمت</h3><form id="productForm"><input name="id" type="hidden"><div class="cols"><label>Product name<input name="name" required></label><label>اردو نام<input name="urdu" dir="rtl"></label><label>Category<select name="category"><option>Honey</option><option>Dry Fruits</option><option>Mustard Oil</option><option>Cow Ghee</option><option>Olive Oil</option><option>Other</option></select></label><label>Price (PKR)<input name="price" type="number" min="0" max="100000000" required></label><label>Stock (units)<input name="stock" type="number" min="0" max="1000000" required></label><label>Pack size<input name="size" placeholder="500g / 1kg"></label></div><label>Photo HTTPS URL<input name="image_url" placeholder="https://..."></label><label>Description<textarea name="description"></textarea></label><button class="primary" type="submit">Save Product</button> <button id="resetProduct" type="button">New Product</button></form><div id="adminProducts"></div></div>
+        <div class="panel"><h3>Payment Accounts / ادائیگی اکاؤنٹس</h3><form id="settingsForm"><div class="cols"><label>JazzCash number<input name="jazz"></label><label>JazzCash account title<input name="jazzName"></label><label>Easypaisa number<input name="easy"></label><label>Easypaisa account title<input name="easyName"></label><label>Bank name<input name="bank"></label><label>Bank account title<input name="bankName"></label><label>Bank account / IBAN<input name="iban"></label><label>Support phone<input name="support"></label></div><button class="primary" type="submit">Save Payment Accounts</button></form></div>
+        <div class="panel"><h3>Customer Orders / آرڈرز</h3><div id="adminOrders"></div></div>
+      </div>
+    </section>
+  </main>
+  <footer><div class="container footer-grid"><div><div class="footer-logo">KALIWAL<span>.com</span></div><p>Your place for pure natural essentials.</p><small>Created by Shoaib Ahmad · تخلیق: شعیب احمد</small></div><div><h3>Shopping</h3><p>Honey · Dry Fruits · Cow Ghee</p><p>Mustard Oil · Olive Oil</p></div><div><h3>Need assistance?</h3><p>Use Track Order for order status.</p><p>Payment verification is manual.</p></div></div><div class="footer-bottom container">© 2026 KALIWAL Online Shopping · Pakistan</div></footer>
 </body>
-  </html>
+</html>
