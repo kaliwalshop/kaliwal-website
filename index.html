@@ -8,8 +8,8 @@
   <title>KALIWAL | Online Shopping in Pakistan</title>
   <link rel="icon" href="logo.jpg">
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="style.css?v=3">
-  <script src="app.js?v=3" defer></script>
+  <link rel="stylesheet" href="style.css?v=4-photo">
+  <script src="app.js?v=4-photo" defer></script>
 </head>
 <body data-view="shop">
   <div class="topbar"><div class="container topbar-inner"><span>🇵🇰 Your marketplace for authentic natural foods</span><span>Welcome to <strong>KALIWAL</strong> · English / اردو</span></div></div>
@@ -118,7 +118,12 @@
       <div id="loginBox" class="panel"><h3>Secure Administrator Login</h3><form id="login"><label>Email<input name="email" type="email" required autocomplete="username"></label><label>Password<input name="password" type="password" required autocomplete="current-password"></label><button class="primary action-btn">Sign In</button></form></div>
       <div id="dashboard" hidden>
         <button id="logout" type="button">Log Out</button>
-        <div class="panel"><h3>Manage Products / پراڈکٹ اور قیمت</h3><form id="productForm"><input name="id" type="hidden"><div class="cols"><label>Product name<input name="name" required></label><label>اردو نام<input name="urdu" dir="rtl"></label><label>Category<select name="category"><option>Honey</option><option>Dry Fruits</option><option>Mustard Oil</option><option>Cow Ghee</option><option>Olive Oil</option><option>Other</option></select></label><label>Price (PKR)<input name="price" type="number" min="0" max="100000000" required></label><label>Stock (units)<input name="stock" type="number" min="0" max="1000000" required></label><label>Pack size<input name="size" placeholder="500g / 1kg"></label></div><label>Photo HTTPS URL<input name="image_url" placeholder="https://..."></label><label>Description<textarea name="description"></textarea></label><button class="primary" type="submit">Save Product</button> <button id="resetProduct" type="button">New Product</button></form><div id="adminProducts"></div></div>
+        <div class="panel"><h3>Manage Products / پراڈکٹ اور قیمت</h3><form id="productForm"><input name="id" type="hidden"><div class="cols"><label>Product name<input name="name" required></label><label>اردو نام<input name="urdu" dir="rtl"></label><label>Category<select name="category"><option>Honey</option><option>Dry Fruits</option><option>Mustard Oil</option><option>Cow Ghee</option><option>Olive Oil</option><option>Other</option></select></label><label>Price (PKR)<input name="price" type="number" min="0" max="100000000" required></label><label>Stock (units)<input name="stock" type="number" min="0" max="1000000" required></label><label>Pack size<input name="size" placeholder="500g / 1kg"></label></div><label class="photo-upload-label">📷 Upload product picture from your phone / تصویر اپلوڈ کریں
+  <input id="productPhoto" type="file" accept="image/*" aria-describedby="photoHelp">
+</label>
+<p id="photoHelp" class="small">Select a photo from Gallery or Camera. It will be resized and saved with your product. No photo URL needed.</p>
+<img id="productPhotoPreview" class="product-photo-preview" alt="Selected product photo preview" hidden>
+<label>Or use a Photo HTTPS URL (optional)<input name="image_url" placeholder="https://..."></label><label>Description<textarea name="description"></textarea></label><button class="primary" type="submit">Save Product</button> <button id="resetProduct" type="button">New Product</button></form><div id="adminProducts"></div></div>
         <div class="panel"><h3>Payment Accounts / ادائیگی اکاؤنٹس</h3><form id="settingsForm"><div class="cols"><label>JazzCash number<input name="jazz"></label><label>JazzCash account title<input name="jazzName"></label><label>Easypaisa number<input name="easy"></label><label>Easypaisa account title<input name="easyName"></label><label>Bank name<input name="bank"></label><label>Bank account title<input name="bankName"></label><label>Bank account / IBAN<input name="iban"></label><label>Support phone<input name="support"></label></div><button class="primary" type="submit">Save Payment Accounts</button></form></div>
         <div class="panel"><h3>Customer Orders / آرڈرز</h3><div id="adminOrders"></div></div>
       </div>
