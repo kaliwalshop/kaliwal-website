@@ -91,3 +91,24 @@ body.urdu [data-en]{direction:rtl}
 .wa-order-link:hover,.wa-order-link:focus-visible{background:#0c7340}
 .wa-small{font-size:12px!important;color:#4a6b57}
 @media(max-width:550px){.wa-order-link{width:100%}.wa-order-panel{padding:16px}}
+
+
+/* KALIWAL Deals & Coupons — orange marketplace styling */
+.card{position:relative}
+.deals-banner{background:linear-gradient(105deg,#ff5e23,#e94c1a 70%,#ad330c);border-radius:13px;padding:16px 20px;display:flex;align-items:center;gap:15px;flex-wrap:wrap;color:white;margin:12px 0 16px;box-shadow:0 8px 18px #ec572638}
+.deals-banner[hidden]{display:none}.deals-banner span{font-size:11px;letter-spacing:1px;font-weight:900;white-space:nowrap}
+.deals-banner strong{font-size:18px;flex:1}.deals-banner button{background:#fff;color:#b64019;padding:10px 15px;border-radius:7px;font-size:12px;font-weight:800}
+.discount-badge{position:absolute;top:9px;left:9px;background:#e12719;color:#fff;z-index:2;padding:5px 9px;border-radius:6px;font-size:11px;font-weight:900;letter-spacing:.2px;box-shadow:0 2px 7px #29150c30}
+.card .price-old{display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:11px;color:#869094;margin-bottom:5px}
+.card .price-old span{color:#148045;font-weight:800}
+.cart-discount{color:#148045;font-size:12px;font-weight:800}
+.coupon-box{background:#fff;border:1px solid #f4d8c7;padding:19px;border-radius:13px;margin:15px 0;box-shadow:0 4px 15px #2825250d}
+.coupon-box strong{color:#26363b}.coupon-box p{font-size:12px;color:#78848a;margin:3px 0 12px}
+.coupon-entry{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.coupon-entry input{flex:1 1 220px;max-width:480px;margin:0;letter-spacing:.5px;font-weight:750;text-transform:uppercase}
+.coupon-entry button{padding:11px 15px;border-radius:7px;font-weight:750}
+#removeCoupon{background:#f2f4f6;color:#4b555c}.coupon-box .coupon-status{font-weight:750;color:#36654a;margin:10px 0 0}
+.savings-summary{border-radius:12px;background:#eaf9ed;padding:4px 16px;color:#1b6a3d;margin:12px 0}
+.savings-summary:empty{display:none}.savings-summary p{display:flex;justify-content:space-between;gap:12px;font-size:13px}.saving-grand{border-top:1px solid #c5e6cd;padding-top:10px;font-weight:850}
+.coupon-admin-row{display:flex;align-items:center;justify-content:space-between;gap:12px}.coupon-admin-row small{display:block;color:#78848a;margin-top:3px}
+.coupon-admin-row button{flex:none}.coupon-box [hidden]{display:none}
+@media(max-width:550px){.deals-banner{align-items:flex-start;padding:13px;gap:7px}.deals-banner strong{font-size:14px;flex-basis:100%}.deals-banner button{width:100%}.coupon-entry button{flex:1}.coupon-box{padding:15px}}

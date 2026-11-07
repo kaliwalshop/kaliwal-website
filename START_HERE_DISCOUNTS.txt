@@ -1,0 +1,43 @@
+KALIWAL.COM — AMAZON-INSPIRED DISCOUNT SYSTEM (2026)
+
+BACKUP FIRST. This update makes additive PostgreSQL table changes on startup.
+It is meant for the KALIWAL code versions previously created in this conversation (photo uploader + WhatsApp orders + orange Daraz-style storefront).
+
+Included 5 replacement files (GitHub repository root):
+   server.js
+   index.html
+   app.js
+   style.css
+   sw.js
+
+Keep your existing .env configuration, images, package.json, manifest.webmanifest, etc. The deployment must use the SAME Render service and SAME production PostgreSQL database. DO NOT publish or change your secret credentials.
+
+STEP BY STEP:
+1. Make a PostgreSQL database backup/snapshot before changing a live shop.
+2. Unzip this archive. Upload these FIVE files to ROOT of https://github.com/kaliwalshop/kaliwal-website (not to public/ folder), committing the replacements.
+3. Render Dashboard > kaliwal-website-1 > Deploys. Check new deployment is LIVE and no database migration errors appear in logs.
+4. Open https://kaliwal-website-1.onrender.com/?admin=1 and log in. Check existing products and order records.
+5. In Manage Products, click Edit on an existing product, set 10% discount, optionally choose sale start and end, Save Product.
+6. Use Discount Coupon Manager: enter e.g. WELCOME10, Type Percentage, Value 10, Minimum Order 1000, Max Discount 500, Usage Limit 25, optional dates, Create Coupon.
+7. Open public website in a private browser tab. Verify red -10% badge, crossed-out old price, discounted price, and Today's Deals filter. Add item to Cart, enter WELCOME10, Apply.
+8. Place a TEST ORDER using test checkout details and NO real payment. Verify the *same* final total in Admin and WhatsApp draft. The server calculates discounts; customer cannot override prices.
+
+FEATURES
+* Product sale % (0-90%) and optional date-range scheduling; old/new prices and savings.
+* Today’s Deals and promo banner when at least one sale active.
+* Percentage/flat coupon codes, minimum cart value, optional max discount, redemption limits, start/end dates.
+* Admin create/pause/reactivate coupon; saved orders retain original subtotal, discounts, code and final total.
+* All discounts are verified and calculated by server in an atomic transaction on order creation.
+* Existing products, photos, WhatsApp checkout, order tracking, customer info, and payment settings remain in PostgreSQL.
+
+LIMITATIONS AND PRECAUTIONS
+* Existing orders are unchanged. Historic purchases are never repriced.
+* Flash sale time uses absolute timestamps and is enforced server-side. User's browser time may differ; reload for changes.
+* Coupon limit is per *total uses*, not per customer. There is no customer-account system yet.
+* Coupons do not stack with other coupons; a product sale and one coupon can combine.
+* Discount total has a floor of Rs 1; no free checkout.
+* Orders are saved before WhatsApp is opened; customer still manually presses Send.
+* Coupons are counted when an order is placed, even if it is later cancelled; coupon redemptions are not automatically refunded.
+* Do not use fake list prices or deceptive markdowns. Only discount from your actual standard price.
+* This is a code package, NOT automatically deployed. Test before accepting live customer payments.
+

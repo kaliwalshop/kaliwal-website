@@ -8,8 +8,8 @@
   <title>KALIWAL | Online Shopping in Pakistan</title>
   <link rel="icon" href="logo.jpg">
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="style.css?v=5-whatsapp">
-  <script src="app.js?v=5-whatsapp" defer></script>
+  <link rel="stylesheet" href="style.css?v=discounts1">
+  <script src="app.js?v=discounts1" defer></script>
 </head>
 <body data-view="shop">
   <div class="topbar"><div class="container topbar-inner"><span>🇵🇰 Your marketplace for authentic natural foods</span><span>Welcome to <strong>KALIWAL</strong> · English / اردو</span></div></div>
@@ -75,10 +75,10 @@
       </section>
     </div>
 
-    <section id="shop" class="store-section">
+    <section id="shop" class="store-section"><div id="dealsBanner" class="deals-banner" hidden><span>🔥 LIMITED-TIME OFFERS</span><strong id="dealsBannerText">Save on selected products</strong><button type="button" id="showDeals">Shop Deals →</button></div>
       <div class="section-heading products-heading"><div><span class="heading-kicker">KALIWAL COLLECTION</span><h2>Recommended For You <small>/ مصنوعات</small></h2></div><span id="productCount" aria-live="polite"></span></div>
       <div id="categoryChips" class="category-chips" aria-label="Filter products">
-        <button type="button" data-category="All" class="selected">All Products</button>
+        <button type="button" data-category="All" class="selected">All Products</button><button type="button" data-category="Deals">🔥 Today’s Deals</button>
         <button type="button" data-category="Honey">🍯 Honey</button>
         <button type="button" data-category="Dry Fruits">🥜 Dry Fruits</button>
         <button type="button" data-category="Mustard Oil">🌻 Mustard Oil</button>
@@ -90,7 +90,12 @@
 
     <section id="cart" class="inner-section" hidden>
       <div class="section-heading"><div><span class="heading-kicker">CHECKOUT</span><h2>Your Shopping Cart 🛒</h2></div></div>
-      <div id="cartLines"></div><h3 id="total" class="cart-total"></h3>
+      <div id="cartLines"></div>
+      <div class="coupon-box"><div><strong>🎟️ Apply Discount Coupon</strong><p>Enter a promo code to see your savings.</p></div>
+        <div class="coupon-entry"><input id="couponCode" aria-label="Coupon code" maxlength="24" placeholder="Enter coupon code (e.g. WELCOME10)" autocapitalize="characters"><button id="applyCoupon" type="button" class="primary">Apply</button><button id="removeCoupon" type="button">Remove</button></div>
+        <p id="couponStatus" aria-live="polite" class="coupon-status"></p>
+      </div>
+      <div id="savingsSummary" class="savings-summary"></div><h3 id="total" class="cart-total"></h3>
       <form id="checkout" class="panel" autocomplete="on">
         <h3>Delivery &amp; Payment / پتہ اور ادائیگی</h3>
         <div class="cols">
@@ -124,12 +129,26 @@
       <div id="loginBox" class="panel"><h3>Secure Administrator Login</h3><form id="login"><label>Email<input name="email" type="email" required autocomplete="username"></label><label>Password<input name="password" type="password" required autocomplete="current-password"></label><button class="primary action-btn">Sign In</button></form></div>
       <div id="dashboard" hidden>
         <button id="logout" type="button">Log Out</button>
-        <div class="panel"><h3>Manage Products / پراڈکٹ اور قیمت</h3><form id="productForm"><input name="id" type="hidden"><div class="cols"><label>Product name<input name="name" required></label><label>اردو نام<input name="urdu" dir="rtl"></label><label>Category<select name="category"><option>Honey</option><option>Dry Fruits</option><option>Mustard Oil</option><option>Cow Ghee</option><option>Olive Oil</option><option>Other</option></select></label><label>Price (PKR)<input name="price" type="number" min="0" max="100000000" required></label><label>Stock (units)<input name="stock" type="number" min="0" max="1000000" required></label><label>Pack size<input name="size" placeholder="500g / 1kg"></label></div><label class="photo-upload-label">📷 Upload product picture from your phone / تصویر اپلوڈ کریں
+        <div class="panel"><h3>Manage Products / پراڈکٹ اور قیمت</h3><form id="productForm"><input name="id" type="hidden"><div class="cols"><label>Product name<input name="name" required></label><label>اردو نام<input name="urdu" dir="rtl"></label><label>Category<select name="category"><option>Honey</option><option>Dry Fruits</option><option>Mustard Oil</option><option>Cow Ghee</option><option>Olive Oil</option><option>Other</option></select></label><label>Price (PKR)<input name="price" type="number" min="0" max="100000000" required></label><label>Stock (units)<input name="stock" type="number" min="0" max="1000000" required></label><label>🔥 Product discount (%)<input name="discount_percent" type="number" min="0" max="90" value="0" required><small>0 = no sale. Original price stays unchanged.</small></label><label>Sale starts (optional)<input name="sale_start" type="datetime-local"></label><label>Sale ends (optional)<input name="sale_end" type="datetime-local"></label><label>Pack size<input name="size" placeholder="500g / 1kg"></label></div><label class="photo-upload-label">📷 Upload product picture from your phone / تصویر اپلوڈ کریں
   <input id="productPhoto" type="file" accept="image/*" aria-describedby="photoHelp">
 </label>
 <p id="photoHelp" class="small">Select a photo from Gallery or Camera. It will be resized and saved with your product. No photo URL needed.</p>
 <img id="productPhotoPreview" class="product-photo-preview" alt="Selected product photo preview" hidden>
 <label>Or use a Photo HTTPS URL (optional)<input name="image_url" placeholder="https://..."></label><label>Description<textarea name="description"></textarea></label><button class="primary" type="submit">Save Product</button> <button id="resetProduct" type="button">New Product</button></form><div id="adminProducts"></div></div>
+        <div class="panel"><h3>🎟️ Discount Coupon Manager / ڈسکاؤنٹ کوپن</h3>
+          <p class="small">Create codes like WELCOME10 or EID500. Discounts are validated on the server at checkout. Set optional limits to prevent misuse.</p>
+          <form id="couponForm"><div class="cols">
+            <label>Coupon code<input name="code" required minlength="3" maxlength="24" pattern="[A-Za-z0-9_-]{3,24}" placeholder="WELCOME10" autocapitalize="characters"></label>
+            <label>Discount type<select name="kind"><option value="percent">Percentage (%)</option><option value="fixed">Fixed amount (PKR)</option></select></label>
+            <label>Value<input name="value" type="number" min="1" max="100000000" required value="10"></label>
+            <label>Minimum order (PKR)<input name="min_order" type="number" min="0" value="0"></label>
+            <label>Max discount (PKR, optional)<input name="max_discount" type="number" min="1" placeholder="Unlimited"></label>
+            <label>Usage limit (optional)<input name="usage_limit" type="number" min="1" placeholder="Unlimited"></label>
+            <label>Starts (optional)<input name="starts_at" type="datetime-local"></label>
+            <label>Expires (optional)<input name="expires_at" type="datetime-local"></label>
+          </div><button class="primary" type="submit">Create Coupon</button></form>
+          <div id="adminCoupons"></div>
+        </div>
         <div class="panel"><h3>Payment Accounts / ادائیگی اکاؤنٹس</h3><form id="settingsForm"><div class="cols"><label>JazzCash number<input name="jazz"></label><label>JazzCash account title<input name="jazzName"></label><label>Easypaisa number<input name="easy"></label><label>Easypaisa account title<input name="easyName"></label><label>Bank name<input name="bank"></label><label>Bank account title<input name="bankName"></label><label>Bank account / IBAN<input name="iban"></label><label>Order WhatsApp number (+92) / آرڈر واٹس ایپ نمبر<input name="support" type="tel" inputmode="tel" placeholder="03XXXXXXXXX or +923XXXXXXXXX"></label></div><p class="small">Use your business WhatsApp number. It will be shared with customers when they tap Send Order on WhatsApp. The customer must press Send; messages are not sent automatically.</p><button class="primary" type="submit">Save Payment Accounts</button></form></div>
         <div class="panel"><h3>Customer Orders / آرڈرز</h3><div id="adminOrders"></div></div>
       </div>
