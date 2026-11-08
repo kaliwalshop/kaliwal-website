@@ -1,0 +1,119 @@
+/* KALIWAL — readable mobile UI upgrade, 2026-11-08
+   Presentation-only improvements: no change to product data, prices, cart, or checkout.
+   Stylesheet is loaded after style.css to keep this update isolated/reversible. */
+:root { -webkit-text-size-adjust:100%; text-size-adjust:100%; }
+/* Keep an easy-to-read typeface across the store (including browser webviews). */
+body, button, input, select, textarea { font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif; }
+button { touch-action:manipulation; }
+/* Contrast and tap targets for all screens. */
+.card .price-old, .flash-info del { color:#717e88; }
+.card button.primary, .flash-info button, .flash-title-row button { font-weight:800; }
+
+/* Small laptops, tablets and mobile browsers in 'Desktop site' mode. */
+@media (max-width:1100px) {
+  body { font-size:17px; line-height:1.5; }
+  .container { padding-inline:14px; }
+  /* Keep the logo prominent and give search its own full-width row. */
+  .head-inner {
+    display:grid; grid-template-columns:minmax(0,1fr) auto auto;
+    align-items:center; gap:10px; padding-block:11px 12px; min-height:unset;
+  }
+  .brand-wrap { grid-column:1; grid-row:1; min-width:0; gap:10px; }
+  .brand-logo { width:70px; height:70px; border-radius:13px; object-fit:contain; flex-shrink:0; }
+  .brand-copy b { font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif; font-size:28px; letter-spacing:-.75px; line-height:1.1; }
+  .brand-copy b span { font-size:16px; }
+  .brand-copy small { font-size:13px; line-height:1.2; }
+  .header-search { grid-column:1 / -1; grid-row:2; order:unset; width:100%; min-width:0; margin:0; }
+  .header-search input { height:51px; font-size:17px; }
+  .header-search span { min-width:54px; font-size:32px; }
+  .cart-head { grid-column:2; grid-row:1; margin-left:0; font-size:25px; min-height:46px; }
+  .cart-head .cart-label { display:inline; font-size:15px; }
+  .cart-head strong { min-width:25px; height:25px; font-size:13px; }
+  .language-button { grid-column:3; grid-row:1; min-height:46px; font-size:14px; }
+  .store-nav button { font-size:16px; min-height:45px; }
+  .connection-status { font-size:14px; }
+  .flash-title-row { padding:17px 17px; }
+  .flash-title-row strong { font-size:25px; }
+  .flash-title-row small { font-size:14px; }
+  .flash-title-row button { font-size:15px; padding:12px 15px; }
+  /* Two substantial flash cards instead of five tiny cards at this viewport. */
+  .flash-products { grid-auto-columns:calc((100% - 12px)/2); gap:12px; padding:13px; }
+  .flash-art { font-size:72px; }
+  .flash-info { padding:13px; gap:7px; }
+  .flash-info h3 { font-size:18px; line-height:1.35; min-height:48px; }
+  .flash-info b { font-size:25px; }
+  .flash-info del, .flash-info small { font-size:14px; }
+  .flash-info button { font-size:17px; min-height:50px; }
+  .flash-badge { font-size:13px; padding:7px 10px; }
+  .deals-banner span { font-size:13px; }
+  .deals-banner strong { font-size:18px; }
+  .deals-banner button { font-size:15px; min-height:42px; }
+  .section-heading h2 { font-size:27px; }
+  .heading-kicker { font-size:12px; }
+  .category-chips button { font-size:15px; min-height:44px; padding-inline:16px; }
+  .grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:13px; }
+  .card h3 { font-size:19px; min-height:52px; line-height:1.3; }
+  .card .product-type { font-size:13px; }
+  .card-body { padding:14px; }
+  .card .price { font-size:27px; line-height:1.3; }
+  .card .small, .card .price-old { font-size:14px; }
+  .card .stock-note { font-size:14px; }
+  .card button.primary { font-size:18px; min-height:53px; padding:11px 10px; }
+  .discount-badge { font-size:14px; padding:7px 10px; }
+  .mobile-bottom-nav button b { font-size:13px; }
+  .footer-grid p, .footer-grid small { font-size:14px; }
+}
+
+/* Actual phone-sized viewports. */
+@media (max-width:600px) {
+  .container { padding-inline:12px; }
+  .head-inner { padding:11px 12px 12px; gap:7px; }
+  .brand-wrap { gap:8px; }
+  .brand-logo { width:60px; height:60px; border-radius:12px; }
+  .brand-copy b { font-size:22px; letter-spacing:-.55px; }
+  .brand-copy b span { font-size:13px; }
+  .brand-copy small { font-size:11px; }
+  .cart-head { gap:3px; padding-inline:2px; }
+  .cart-head .cart-label { display:none; }
+  .language-button { padding:8px 6px; font-size:12px; }
+  .header-search input { height:48px; font-size:16px; }
+  .flash-title-row { padding:14px 12px; }
+  .flash-title-row strong { font-size:21px; }
+  .flash-title-row small { font-size:13px; }
+  .flash-title-row button { font-size:13px; padding:10px; }
+  .flash-products { grid-auto-columns:calc((100% - 10px)/2); padding:10px; gap:10px; }
+  .flash-info { padding:10px; gap:5px; }
+  .flash-info h3 { font-size:16px; min-height:43px; }
+  .flash-info b { font-size:21px; }
+  .flash-info del, .flash-info small { font-size:13px; }
+  .flash-info button { min-height:47px; font-size:16px; }
+  .flash-badge { font-size:12px; padding:6px 7px; }
+  .section-heading h2 { font-size:23px; }
+  .category-chips button { font-size:14px; min-height:42px; }
+  .grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+  .card-body { padding:10px; }
+  .card h3 { font-size:17px; min-height:47px; }
+  .card .product-type { font-size:12px; }
+  .card .price { font-size:23px; }
+  .card .small, .card .price-old { font-size:13px; }
+  .card .stock-note { font-size:13px; }
+  .card button.primary { min-height:49px; font-size:16px; padding:10px 5px; }
+  .discount-badge { font-size:12px; padding:6px 8px; }
+  .deals-banner strong { font-size:16px; }
+  .deals-banner span { font-size:12px; }
+  .deals-banner button { font-size:14px; }
+  .mobile-bottom-nav button b { font-size:12px; }
+}
+
+@media (max-width:360px) {
+  .brand-logo { width:54px; height:54px; }
+  .brand-copy b { font-size:19px; }
+  .brand-copy b span { font-size:11px; }
+  .brand-copy small { font-size:10px; }
+  .language-button { font-size:11px; }
+  .flash-info h3 { font-size:15px; }
+  .flash-info b { font-size:19px; }
+  .flash-info button, .card button.primary { font-size:15px; }
+  .card h3 { font-size:16px; }
+  .card .price { font-size:21px; }
+}

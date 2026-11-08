@@ -1,27 +1,29 @@
-KALIWAL Clean Shopping Homepage — November 2026
+KALIWAL — Larger Logo, Fonts & Add-to-Cart Buttons
 
-This replaces the latest Daraz-inspired mobile update's four ROOT frontend files.
+This package is for the latest CLEAN HOMEPAGE version of your KALIWAL website.
 
-REMOVED FROM THE CUSTOMER HOMEPAGE:
-- ONLINE: Orders are submitted securely to the server (hidden when online; offline warning retained)
-- Large WELCOME TO KALIWAL / Pure goodness hero banner
-- Shop by category sidebar alongside the hero
-- Easy shopping / Order tracking / Secure checkout / Pakistan delivery promotional strip
-- Shop Popular Categories promotional icons section
+WHAT IT CHANGES
+* Bigger header KALIWAL logo and brand text
+* Larger, easier-to-read product names, prices, discount labels, stock and navigation
+* Bigger and easier-to-tap Add to Cart buttons
+* Two larger Flash Deals cards visible at a time on mobile/tablets
+* Search bar gets its own row on small screens so it stays readable
 
-KEPT:
-- Orange header, search, cart, language button and navigation
-- Flash Deals and discount products
-- Recommended For You products, prices, larger pictures and 2-card mobile layout
-- Product category FILTER CHIPS and bottom Categories button (now scrolls to filter chips)
-- Checkout, coupons, WhatsApp, customer order tracking and private admin
-- Database and server untouched
+WHAT IT DOES NOT CHANGE
+* No edits to server.js, app.js, payment details, database, products, cart, checkout or coupon calculations
+* No changes to product images themselves
 
-INSTALL:
-1. Back up current GitHub main files first.
-2. Extract this ZIP, upload index.html, style.css, app.js, sw.js to the ROOT folder of github.com/kaliwalshop/kaliwal-website.
-3. Commit, then deploy latest commit on Render service kaliwal-website-1 (not website-3).
-4. Open site on phone with Desktop site turned OFF and reload.
-5. Test store, category filters, discounts, checkout and admin before taking real orders.
+INSTALL ON GITHUB MAIN ROOT
+1) Back up or download the current GitHub index.html and sw.js first.
+2) Upload: index.html, kaliwal-readable.css and sw.js (all three) to the main/root directory.
+3) Do NOT upload into public/. Do NOT delete any existing files.
+4) Commit changes, deploy latest commit on Render 'kaliwal-website-1'.
+5) Open your site, refresh. In phone Chrome, make sure 'Desktop site' is OFF.
+6) Test Add to Cart, Flash Deals and checkout before taking customer orders.
 
-If your live repository has changed since the previous mobile package, compare files before replacing to avoid overwriting unrelated updates.
+Note: The updated index.html matches the previous Clean Homepage package. If you have edited
+index.html independently since that update, instead add this line into its <head> immediately AFTER
+the existing style.css link and upload only the CSS and sw.js files:
+<link rel="stylesheet" href="kaliwal-readable.css?v=20261108-large-ui1">
+
+To undo, remove the kaliwal-readable.css link from index.html.
