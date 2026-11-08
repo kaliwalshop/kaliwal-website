@@ -3,13 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#ed5a2b">
+  <meta name="theme-color" content="#ff5c00">
+  <meta name="color-scheme" content="light">
   <meta name="description" content="Shop natural honey, dry fruits, mustard oil, cow ghee and olive oil at KALIWAL Online Shopping Pakistan.">
   <title>KALIWAL | Online Shopping in Pakistan</title>
   <link rel="icon" href="logo.jpg">
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="style.css?v=discounts1">
-  <script src="app.js?v=discounts1" defer></script>
+  <link rel="stylesheet" href="style.css?v=kaliwal-clean-home4">
+  <script src="app.js?v=kaliwal-clean-home4" defer></script>
 </head>
 <body data-view="shop">
   <div class="topbar"><div class="container topbar-inner"><span>🇵🇰 Your marketplace for authentic natural foods</span><span>Welcome to <strong>KALIWAL</strong> · English / اردو</span></div></div>
@@ -43,35 +44,12 @@
   <main class="container">
     <p id="message" role="status" aria-live="polite"></p>
     <div class="home-only">
-      <div class="welcome-line"><span>🏷️ Quality natural products, fair prices</span><span>Fresh finds for your family</span></div>
-      <div class="hero-grid">
-        <aside class="category-sidebar" aria-label="Categories">
-          <h2>Shop by category</h2>
-          <button type="button" data-category="Honey"><span>🍯</span> Pure Honey <b>›</b></button>
-          <button type="button" data-category="Dry Fruits"><span>🥜</span> Dry Fruits <b>›</b></button>
-          <button type="button" data-category="Mustard Oil"><span>🌻</span> Mustard Oil <b>›</b></button>
-          <button type="button" data-category="Cow Ghee"><span>🧈</span> Cow Ghee <b>›</b></button>
-          <button type="button" data-category="Olive Oil"><span>🫒</span> Olive Oil <b>›</b></button>
-        </aside>
-        <section class="hero" aria-label="Featured products">
-          <div class="hero-copy"><span class="eyebrow">WELCOME TO KALIWAL</span><h1>Pure goodness,<br><em>delivered to your door.</em></h1><p>Discover carefully selected honey, dry fruits, oils and ghee — all in one convenient place.</p><a href="#shop" class="hero-cta">Explore Products <span>→</span></a></div>
-          <div class="hero-visual" aria-hidden="true"><span class="circle circle-one"></span><span class="circle circle-two"></span><span class="hero-honey">🍯</span><span class="hero-nuts">🥜</span><span class="hero-olive">🫒</span></div>
-        </section>
-        <aside class="promo-aside">
-          <div class="promo-box orange"><span>SHOP NATURAL</span><strong>Everyday essentials<br>for your home</strong><i>🌿</i></div>
-          <div class="promo-box cream"><span>FAST & EASY</span><strong>Order online,<br>track anytime</strong><i>📦</i></div>
-        </aside>
-      </div>
-      <div class="trust-strip"><div><span>🛍️</span><b>Easy shopping</b><small>Order on any device</small></div><div><span>📦</span><b>Order tracking</b><small>Use your private order code</small></div><div><span>🔒</span><b>Secure checkout</b><small>Payment checked manually</small></div><div><span>🇵🇰</span><b>Pakistan delivery</b><small>Charges confirmed before dispatch</small></div></div>
-      <section class="category-tiles" aria-label="Explore categories">
-        <div class="section-heading"><div><span class="heading-kicker">EXPLORE</span><h2>Shop Popular Categories</h2></div><span>Handpicked for you</span></div>
-        <div class="tiles">
-          <button type="button" data-category="Honey"><span class="tile-icon honey">🍯</span><b>Pure Honey</b></button>
-          <button type="button" data-category="Dry Fruits"><span class="tile-icon nuts">🥜</span><b>Dry Fruits</b></button>
-          <button type="button" data-category="Mustard Oil"><span class="tile-icon mustard">🌻</span><b>Mustard Oil</b></button>
-          <button type="button" data-category="Cow Ghee"><span class="tile-icon ghee">🧈</span><b>Cow Ghee</b></button>
-          <button type="button" data-category="Olive Oil"><span class="tile-icon olive">🫒</span><b>Olive Oil</b></button>
-        </div>
+      <!-- Top hero, benefits, sidebar and category promotion removed at owner's request.
+           Actual product categories remain usable through navigation, filters and footer. -->
+      <!-- Genuine, server-priced promotional products only: no fabricated sold counts or timers. -->
+      <section id="flashSale" class="flash-sale" aria-label="Flash deals" hidden>
+        <div class="flash-title-row"><div><strong>⚡ Flash Deals</strong><small>Limited offers on selected products</small></div><button id="flashShopAll" type="button">Shop All Deals →</button></div>
+        <div id="flashProducts" class="flash-products" aria-live="polite"></div>
       </section>
     </div>
 
@@ -155,5 +133,13 @@
     </section>
   </main>
   <footer><div class="container footer-grid"><div><div class="footer-logo">KALIWAL<span>.com</span></div><p>Your place for pure natural essentials.</p><small>Created by Shoaib Ahmad · تخلیق: شعیب احمد</small></div><div><h3>Shopping</h3><p>Honey · Dry Fruits · Cow Ghee</p><p>Mustard Oil · Olive Oil</p></div><div><h3>Need assistance?</h3><p>Use Track Order for order status.</p><p>Payment verification is manual.</p></div></div><div class="footer-bottom container">© 2026 KALIWAL Online Shopping · Pakistan</div></footer>
+  <!-- Mobile-only shopping navigation (same existing views and cart, no new accounts). -->
+  <nav class="mobile-bottom-nav" aria-label="Mobile shopping navigation">
+    <button type="button" data-tab="shop"><span aria-hidden="true">⌂</span><b>Home</b></button>
+    <button type="button" id="navCategories"><span aria-hidden="true">▦</span><b>Categories</b></button>
+    <button type="button" data-category="Deals"><span aria-hidden="true">⚡</span><b>Deals</b></button>
+    <button type="button" data-tab="cart"><span aria-hidden="true">🛒</span><b>Cart</b></button>
+    <button type="button" data-tab="track"><span aria-hidden="true">▣</span><b>Orders</b></button>
+  </nav>
 </body>
 </html>
